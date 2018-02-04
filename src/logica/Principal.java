@@ -1,12 +1,11 @@
-package principal;
+package logica;
 import java.sql.SQLException;
-import proyecto_interfaz.MenuPrincipal;
+import vista.MPrincipal;
 public class Principal {
 
     public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException {
         Conexion_base objCon = new Conexion_base();
-        MenuPrincipal principal = new MenuPrincipal();
-        principal.show();
+        MPrincipal principal = new MPrincipal();
     }
 
 }

@@ -3,18 +3,44 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto_interfaz;
+package vista;
+
+import logica.Conexion_base;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Luis Reategui
  */
-public class MFacultad extends javax.swing.JFrame {
-
-    /**
-     * Creates new form MEstudiante
-     */
-    public MFacultad() {
+public class MEstudiante extends javax.swing.JFrame {
+    DefaultTableModel model1;
+    public void cargar(){
+        try {
+            String [] titulo ={"CODIGO","DESCRIPCION","MARCA","PRECIO","ESTADO"};
+            String [] registros = new String[5];
+            String sentencia = "SELECT *FROM HERRAMIENTAS";
+            model1 = new DefaultTableModel(null,titulo);
+            Conexion_base.stm = Conexion_base.coneccion.createStatement();
+            ResultSet resultado = Conexion_base.stm.executeQuery(sentencia);
+            while(resultado.next()){
+                registros[0]= resultado.getString(1);
+                registros[1]= resultado.getString(2);
+                registros[2]= resultado.getString(3);
+                registros[3]= resultado.getString(4);
+                registros[4]= resultado.getString(5);
+                model1.addRow(registros);
+            }
+            tb_datos_estudiantes.setModel(model1);
+        } catch (SQLException ex) {
+            //Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+    
+    public MEstudiante() {
         initComponents();
     }
 
@@ -30,6 +56,7 @@ public class MFacultad extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_codigo_estudiante = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        txt_nombre_estudiante = new javax.swing.JTextField();
         txt_correo_estudiante = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -41,15 +68,14 @@ public class MFacultad extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Codigo:");
 
-        jLabel2.setText("Universidad");
+        jLabel2.setText("Nombre:");
 
-        jLabel3.setText("Nombre");
+        jLabel3.setText("Correo:");
 
         tb_datos_estudiantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,7 +87,7 @@ public class MFacultad extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Codigo", "Universidad", "Nombre"
+                "Codigo", "Nombre", "Correo"
             }
         ) {
             Class[] types = new Class [] {
@@ -122,9 +148,7 @@ public class MFacultad extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Módulo Facultad");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "UNIVERSIDAD DE GUAYAUIL" }));
+        jLabel4.setText("Módulo Estudiante");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,24 +157,24 @@ public class MFacultad extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_correo_estudiante, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(txt_codigo_estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(256, 256, 256))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
-                        .addGap(0, 23, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_correo_estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_codigo_estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_nombre_estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(9, 9, 9)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +187,7 @@ public class MFacultad extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombre_estudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -178,9 +202,6 @@ public class MFacultad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -195,23 +216,20 @@ public class MFacultad extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MFacultad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MFacultad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MFacultad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MFacultad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MFacultad().setVisible(true);
+                new MEstudiante().setVisible(true);
             }
         });
     }
@@ -222,7 +240,6 @@ public class MFacultad extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -232,5 +249,6 @@ public class MFacultad extends javax.swing.JFrame {
     private javax.swing.JTable tb_datos_estudiantes;
     private javax.swing.JTextField txt_codigo_estudiante;
     private javax.swing.JTextField txt_correo_estudiante;
+    private javax.swing.JTextField txt_nombre_estudiante;
     // End of variables declaration//GEN-END:variables
 }

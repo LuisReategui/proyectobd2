@@ -1,14 +1,22 @@
 package vista;
 
+import consultas.MConsultas;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import seguridad.Login;
 
 public class MPrincipal extends javax.swing.JFrame {
+
+    Login login = new Login();
+
     public MPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
+        //this.setEnabled(false);
+        //login.setVisible(true);
         setVisible(true);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -16,6 +24,7 @@ public class MPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
+        escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -33,6 +42,17 @@ public class MPrincipal extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
+        escritorio.setLayout(escritorioLayout);
+        escritorioLayout.setHorizontalGroup(
+            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 799, Short.MAX_VALUE)
+        );
+        escritorioLayout.setVerticalGroup(
+            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 455, Short.MAX_VALUE)
+        );
 
         jMenu3.setText("File");
 
@@ -62,7 +82,12 @@ public class MPrincipal extends javax.swing.JFrame {
         jMenuItem4.setText("Carerra");
         jMenu1.add(jMenuItem4);
 
-        jMenuItem5.setText("Profesores");
+        jMenuItem5.setText("Docente");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setText("Estudiantes");
@@ -79,6 +104,11 @@ public class MPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Consultar");
 
         jMenuItem10.setText("Consultas generales");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem10);
 
         jMenuBar1.add(jMenu2);
@@ -89,22 +119,22 @@ public class MPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 799, Short.MAX_VALUE)
+            .addComponent(escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addComponent(escritorio)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-     MUniversidad universidad;
+        MUniversidad universidad;
         try {
             universidad = new MUniversidad();
             universidad.setVisible(true);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(MPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,6 +145,18 @@ public class MPrincipal extends javax.swing.JFrame {
         facultad = new MFacultad();
         facultad.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        MDocente ventana;
+        ventana = new MDocente();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        MConsultas ventana;
+        ventana = new MConsultas();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,6 +195,7 @@ public class MPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

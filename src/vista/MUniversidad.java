@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.OracleTypes;
 
 public final class MUniversidad extends JFrame {
-
     DefaultTableModel model1;
     CallableStatement comando;
     ResultSet resultado;

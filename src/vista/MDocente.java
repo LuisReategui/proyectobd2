@@ -5,17 +5,47 @@
  */
 package vista;
 
-/**
- *
- * @author Luis Reategui
- */
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import logica.Conexion_base;
+import oracle.jdbc.OracleTypes;
+
 public class MDocente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MEstudiante
-     */
+    DefaultTableModel model1;
+    CallableStatement comando;
+    ResultSet resultado;
+
     public MDocente() {
         initComponents();
+    }
+    
+    private void cargarDocente() {
+        try {
+            String[] titulo = {"CODIGO DOCENTE","NOMBRE DOCENTE", "CORREO","CARRERA"};
+            String[] registros = new String[4];
+            String sentencia = "{CALL PK_DOCENTE.PK_CONSULTA_DOCENTE(?)}";
+            model1 = new DefaultTableModel(null, titulo);
+            comando = Conexion_base.coneccion.prepareCall(sentencia);
+            comando.registerOutParameter(1, OracleTypes.CURSOR);
+            comando.execute();
+            resultado = (ResultSet) comando.getObject(1);
+            while (resultado.next()) {
+                registros[0] = resultado.getString(1);
+                registros[1] = resultado.getString(2);
+                registros[2] = resultado.getString(3);
+                registros[3] = resultado.getString(4);
+                model1.addRow(registros);
+            }
+            tb_datos_docente.setModel(model1);
+            resultado.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MUniversidad.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -34,7 +64,7 @@ public class MDocente extends javax.swing.JFrame {
         txt_correo_estudiante = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tb_datos_estudiantes = new javax.swing.JTable();
+        tb_datos_docente = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -51,35 +81,20 @@ public class MDocente extends javax.swing.JFrame {
 
         jLabel3.setText("Correo:");
 
-        tb_datos_estudiantes.setModel(new javax.swing.table.DefaultTableModel(
+        tb_datos_docente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Codigo", "Nombre", "Correo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tb_datos_estudiantes);
+        ));
+        jScrollPane1.setViewportView(tb_datos_docente);
 
         jButton1.setText("Insertar");
 
@@ -88,6 +103,11 @@ public class MDocente extends javax.swing.JFrame {
         jButton3.setText("Eliminar");
 
         jButton4.setText("Consultar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Limpiar campos");
 
@@ -176,6 +196,10 @@ public class MDocente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        cargarDocente();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,6 +227,12 @@ public class MDocente extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -224,7 +254,7 @@ public class MDocente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tb_datos_estudiantes;
+    private javax.swing.JTable tb_datos_docente;
     private javax.swing.JTextField txt_codigo_estudiante;
     private javax.swing.JTextField txt_correo_estudiante;
     private javax.swing.JTextField txt_nombre_estudiante;
